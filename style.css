@@ -182,7 +182,7 @@ a,
 .lead {
     font-size: 18px;
     line-height: 30px;
-    color: #767676;
+    color: black;
     margin: 0;
     padding: 0;
 }
@@ -737,7 +737,7 @@ li.social-links a {
 }
 
 .desc h3 i {
-    color: #2f2f2f;
+    color: black;
     font-size: 37px;
     vertical-align: middle;
     margin-right: 12px;
@@ -784,7 +784,7 @@ li.social-links a {
 .testimonial small,
 .testimonial .lead {
     background-color: transparent;
-    color: #aaa;
+    color: black;
     display: block;
     font-size: 16px;
     font-style: italic;
@@ -844,7 +844,7 @@ li.social-links a {
 .pricing-table-header h3 {
     font-size: 15px;
     font-weight: 600;
-    color: #aaaaaa;
+    color: black;
     margin-top: 10px;
     text-transform: uppercase;
 }
@@ -1085,7 +1085,7 @@ li.social-links a {
     font-weight: 600;
     letter-spacing: 0.5px;
     font-size: 15px;
-    color: #999;
+    color: black;
 }
 
 .message-box h2 {
