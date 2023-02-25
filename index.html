@@ -1,3 +1,76 @@
+<form id="javascript_form">
+   <input type="text" name="subject" placeholder="Subject" />
+   <textarea name="text" placeholder="Message"></textarea>
+   <input type="submit" id="js_send" value="Send" />
+</form>
+
+<script>
+
+   //update this with your js_form selector
+   var form_id_js = "javascript_form";
+
+   var data_js = {
+       "access_token": "{your access token}" // sent after you sign up
+   };
+
+   function js_onSuccess() {
+       // remove this to avoid redirect
+       window.location = window.location.pathname + "?message=Email+Successfully+Sent%21&isError=0";
+   }
+
+   function js_onError(error) {
+       // remove this to avoid redirect
+       window.location = window.location.pathname + "?message=Email+could+not+be+sent.&isError=1";
+   }
+
+   var sendButton = document.getElementById("js_send");
+
+   function js_send() {
+         
+       sendButton.value='Sending…';
+       sendButton.disabled=true;
+       var request = new XMLHttpRequest();
+       request.onreadystatechange = function() {
+           if (request.readyState == 4 && request.status == 200) {
+               js_onSuccess();
+           } else
+           if(request.readyState == 4) {
+               js_onError(request.response);
+           }
+       };
+
+       var subject = document.querySelector("#" + form_id_js + " [name='subject']").value;
+       var message = document.querySelector("#" + form_id_js + " [name='text']").value;
+
+       data_js['subject'] = subject;
+       data_js['text'] = message;
+       var params = toParams(data_js);
+       
+       request.open("POST", "https://postmail.invotes.com/send", true);
+       request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+       request.send(params);
+
+       return false;
+   }
+
+   sendButton.onclick = js_send;
+
+   function toParams(data_js) {
+       var form_data = [];
+       for ( var key in data_js ) {
+           form_data.push(encodeURIComponent(key) + "=" + encodeURIComponent(data_js[key]));
+       }
+
+       return form_data.join("&");
+   }
+
+   var js_form = document.getElementById(form_id_js);
+   js_form.addEventListener("submit", function (e) {
+       e.preventDefault();
+   });
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
    <!-- Basic -->
@@ -39,7 +112,7 @@
       <header>
          <div class="header-top wow fadeIn">
             <div class="container">
-               <a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="image"></a> <! -- replace with logo-->
+               <a class="navbar-brand" href="index.html"><img src="images/final_logo.jpg" width = "100" height = "75" alt="image"></a>
                <div class="right-header">
                   <div class="header-info">
                      <div class="info-inner">
@@ -68,9 +141,9 @@
                   <div id="navbar" class="navbar-collapse collapse">
                      <ul class="nav navbar-nav">
                         <li><a class="active" href="index.html">Home</a></li>
-                        <li><a data-scroll href="#about">About us</a></li>
-                        <li><a data-scroll href="#service">Services</a></li>
-                        <li><a data-scroll href="#doctors">Doctors</a></li>
+                        <li><a data-scroll href="#about">Services</a></li>
+                        <li><a data-scroll href="#service">About Us</a></li>
+                        <li><a data-scroll href="#doctor">Doctor</a></li>
                      </ul>
                   </div>
                </nav>
@@ -100,8 +173,10 @@
                <div class="row">
                   <div class="service-time one" style="background:#2895f1;">
                      <span class="info-icon"><i class="fa fa-ambulance" aria-hidden="true"></i></span>
-                     <h3>Emergency Case</h3>
-                     <p>Dignissimos ducimus qui blanditii sentium volta tum deleniti atque cori as quos dolores et quas mole.</p>
+                     <h3>Services</h3>
+                     <p>We are specialized in a number of healthcare services including Family Medicine,
+                        Emergency Services, COVID-19 Care, Full Health Check Up , Diabetic Clinic, Cardiology,
+                        Ventilator Service, Asthma, Blood Pressure, Malaria</p>
                   </div>
                </div>
             </div>
@@ -125,7 +200,7 @@
                   <div class="service-time three" style="background:#0060b1;">
                      <span class="info-icon"><i class="fa fa-hospital-o" aria-hidden="true"></i></span>
                      <h3>Address</h3>
-                     <p>Dignissimos ducimus qui blanditii sentium volta tum deleniti atque cori as quos dolores et quas mole.</p>
+                     <p>Galli No. 8, Ekvira Devi Chowk, Infront of Kele Dialysis Centre, Deopur, Dhule. 424005 <br> <br> <br> <br> </p>
                   </div>
                </div>
             </div>
@@ -135,23 +210,20 @@
          <div class="container">
             <div class="heading">
                <span class="icon-logo"><img src="images/icon-logo.png" alt="#"></span>
-               <h2>The Specialist Clinic</h2>
+               <h2>The Specialist Clinic and Services </h2>
             </div>
             <!-- end title -->
             <div class="row">
                <div class="col-md-6">
                   <div class="message-box">
-                     <h4>What We Do</h4>
-                     <h2>Clinic Service</h2>
-                     <p class="lead">Quisque eget nisl id nulla sagittis auctor quis id. Aliquam quis vehicula enim, non aliquam risus. Sed a tellus quis mi rhoncus dignissim.</p>
-                     <p> Integer rutrum ligula eu dignissim laoreet. Pellentesque venenatis nibh sed tellus faucibus bibendum. Sed fermentum est vitae rhoncus molestie. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.  </p>
+                     <img src="images/service.jpg" height = "400" width = "550">
                   </div>
                   <!-- end messagebox -->
                </div>
                <!-- end col -->
                <div class="col-md-6">
                   <div class="post-media wow fadeIn">
-                     <img src="images/patient_1.jpg" alt="" class="img-responsive">
+                     <img src="images/patient_1.jpg" height = "400" width = "550">
                   </div>
                   <!-- end media -->
                </div>
@@ -163,7 +235,7 @@
                <div class="col-md-3 col-sm-6 col-xs-12">
                   <div class="service-widget">
                      <div class="post-media wow fadeIn">
-                        <img src="images/pharmacy.jpg" width = "200" height = "250" />
+                        <img src="images/pharmacy.jpg">
                      </div>
                      <h3>In House Pharmacy</h3>
                   </div>
@@ -172,18 +244,18 @@
                <div class="col-md-3 col-sm-6 col-xs-12">
                   <div class="service-widget">
                      <div class="post-media wow fadeIn">
-                        <img src="images/treadmill.jpg" width = "200" height = "250">
+                        <img src="images/treadmill.jpg" >
                      </div>
-                     <h3>Hygienic Operating Room</h3>
+                     <h3>Clinical Treadmill</h3>
                   </div>
                   <!-- end service -->
                </div>
                <div class="col-md-3 col-sm-6 col-xs-12">
                   <div class="service-widget">
                      <div class="post-media wow fadeIn">
-                        <img src="images/machine.jpg" width = "200" height = "250">
+                        <img src="images/machine.jpg" >
                      </div>
-                     <h3>Specialist Physicians</h3>
+                     <h3>Patient Monitor</h3>
                   </div>
 
                   <!-- end service -->
@@ -191,9 +263,9 @@
                <div class="col-md-3 col-sm-6 col-xs-12">
                   <div class="service-widget">
                      <div class="post-media wow fadeIn">
-                        <img src="images/patient_2.jpg" width = "200" height = "250">
+                        <img src="images/staff.jpg" height = "400" width = "550">
                      </div>
-                     <h3>Specialist Physicians</h3>
+                     <h3>Excellent Staff</h3>
                   </div>
                   <!-- end service -->
                </div>
@@ -211,42 +283,36 @@
                         <div class="serv">
                            <span class="icon-service"><img src="images/service-icon1.png" alt="#" /></span>
                            <h4>PREMIUM FACILITIES</h4>
-                           <p>Lorem Ipsum is simply dummy text of the printing.</p>
                         </div>
                      </div>
                      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                         <div class="serv">
                            <span class="icon-service"><img src="images/service-icon2.png" alt="#" /></span>
-                           <h4>LARGE LABORATORY</h4>
-                           <p>Lorem Ipsum is simply dummy text of the printing.</p>
+                           <h4>CARDIAC SERVICES</h4>
                         </div>
                      </div>
                      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                         <div class="serv">
                            <span class="icon-service"><img src="images/service-icon3.png" alt="#" /></span>
-                           <h4>DETAILED SPECIALIST</h4>
-                           <p>Lorem Ipsum is simply dummy text of the printing.</p>
+                           <h4>PHYSICAL CHECKUP</h4>
                         </div>
                      </div>
                      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                         <div class="serv">
                            <span class="icon-service"><img src="images/service-icon4.png" alt="#" /></span>
-                           <h4>CHILDREN CARE CENTER</h4>
-                           <p>Lorem Ipsum is simply dummy text of the printing.</p>
+                           <h4>INTERNAL MEDICINE</h4>
                         </div>
                      </div>
                      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                         <div class="serv">
                            <span class="icon-service"><img src="images/service-icon5.png" alt="#" /></span>
-                           <h4>FINE INFRASTRUCTURE</h4>
-                           <p>Lorem Ipsum is simply dummy text of the printing.</p>
+                           <h4>24 HOUR PHARMACY</h4>
                         </div>
                      </div>
                      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                         <div class="serv">
                            <span class="icon-service"><img src="images/service-icon6.png" alt="#" /></span>
-                           <h4>ANYTIME BLOOD BANK</h4>
-                           <p>Lorem Ipsum is simply dummy text of the printing.</p>
+                           <h4>COVID-19 TESTING</h4>
                         </div>
                      </div>
                   </div>
@@ -271,6 +337,13 @@
                                     </div>
                                  </div>
                               </div>
+                              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                 <div class="row">
+                                    <div class="form-group">
+                                       <input type="phone" placeholder="Phone Number" id="email" />
+                                    </div>
+                                 </div>
+                              </div>
                               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 select-section">
                                  <div class="row">
                                     <div class="form-group">
@@ -278,6 +351,11 @@
                                           <option>Day</option>
                                           <option>Sunday</option>
                                           <option>Monday</option>
+                                          <option>Tuesday</option>
+                                          <option>Wednesday</option>
+                                          <option>Thursday</option>
+                                          <option>Friday</option>
+                                          <option>Saturday</option>
                                        </select>
                                     </div>
                                     <div class="form-group">
@@ -291,12 +369,10 @@
                               </div>
                               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                  <div class="row">
-                                    <div class="form-group">
+                                   <!-- <div class="form-group">
                                        <select class="form-control">
-                                          <option>Doctor Name</option>
-                                          <option>Mr.XYZ</option>
-                                          <option>Mr.ABC</option>
-                                       </select>
+                                          <option>Dr. Girish Vadgaonkar</option>
+                                       </select> -->
                                     </div>
                                  </div>
                               </div>
@@ -310,7 +386,7 @@
                               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                  <div class="row">
                                     <div class="form-group">
-                                       <div class="center"><button type="submit">Submit</button></div>
+                                       <div id = "js_send" class="center" onclick="js_send()"><button type="submit">Submit</button></div>
                                     </div>
                                  </div>
                               </div>
@@ -323,20 +399,33 @@
          </div>
       </div>
       <!-- end section -->
-      <div id="about" class="section wow fadeIn">
+      <div id="doctor" class="section wow fadeIn">
          <div class="container">
             <div class="heading">
                <span class="icon-logo"><img src="images/icon-logo.png" alt="#"></span>
-               <h2>Dr. Girish Vadgaonkar</h2>
+               <h2>Dr. Girish Vadgaonkar, MD</h2>
             </div>
             <!-- end title -->
             <div class="row">
                <div class="col-md-6">
                   <div class="message-box">
-                     <h4>What We Do</h4>
-                     <h2>Clinic Service</h2>
-                     <p class="lead">Quisque eget nisl id nulla sagittis auctor quis id. Aliquam quis vehicula enim, non aliquam risus. Sed a tellus quis mi rhoncus dignissim.</p>
-                     <p> Integer rutrum ligula eu dignissim laoreet. Pellentesque venenatis nibh sed tellus faucibus bibendum. Sed fermentum est vitae rhoncus molestie. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.  </p>
+                     <h2>About the Doctor</h2>
+                     <p style="color:black"> Dr. Vadgaonkar Girish Vitthalrao is specialized in Internal Medicine. He completed his MBBS from King Edward Memorial Hospital and Seth Gordhandas Sunderdas Medical College in 2008. Then he did his MD in General Medicine from the Maharashtra University of Health Sciences in 2011. Dr. Girish currently practices at Shriniwas Hospital, Maharashtra, with 14 years of clinical experience. But his latest endeavour has been the owning and operating Deopur Hospital.
+</p>              
+                        <p style="color:black;">
+                        Experience: <br>
+                        - Assistant professor in BJ Medical college <br>
+                        - Intensivist in Sahyadri Super Speciality Hospital Pune <br> 
+                        - Medical director of Shriniwas Hospital for 4 years in Nashik <br> 
+                        - Visiting consultant and intensivist in Magnum Cardiac Institute <br> 
+                        - Full time consultant in Global Hospital Mumbai <br> 
+                        - During the COVID wave Dr. Girish served humanity by being the first responder in the crisis <br> 
+                        - Established fever OPD in BSES Global Hospital <br> 
+                        - One of the first physicians to work for COVID patients in a global hospital when other hospitals were shut down <br>
+                        - Served as a Covid Consultant to government institutes; Bharat Ratna Dr. Babasaheb Ambedkar Municipal Corporation Hospital Kandivali <br>
+                        - Worked as a Covid Consultant in NESCO COVID Center to serve patients <br>
+                        - Learned 2D Echo from various stalwarts in the field such as Dr. Lotlikar <br>
+                        </p>
                   </div>
                   <!-- end messagebox -->
                </div>
@@ -363,7 +452,7 @@
             <div class="row">
                <div class="col-md-8">
                   <div class="footer-text">
-                     <p>© 2021 Deopur Hospital. All Rights Reserved.</p>
+                     <p>© 2023 Deopur Hospital. All Rights Reserved.</p>
                   </div>
                </div>
                <div class="col-md-4">
